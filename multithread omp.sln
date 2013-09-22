@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multithread omp", "multithread omp\multithread omp.vcxproj", "{2E331166-5C82-41F1-90DF-D9CB682513CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E331166-5C82-41F1-90DF-D9CB682513CD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2E331166-5C82-41F1-90DF-D9CB682513CD}.Debug|Win32.Build.0 = Debug|Win32
+		{2E331166-5C82-41F1-90DF-D9CB682513CD}.Release|Win32.ActiveCfg = Release|Win32
+		{2E331166-5C82-41F1-90DF-D9CB682513CD}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
