@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 
 using namespace std;
@@ -32,9 +33,14 @@ Struct::Struct(string input)
 string Struct::Print()
 {
 	stringstream ss;
-	ss << setw(20) << pav << setw(5) << kiekis << setw(20) << kaina << endl;
+	ss << setw(15) << pav << setw(7) << kiekis << setw(20) << kaina;
 	return ss.str();
 }
+
+string Titles();
+string Print(int nr, Struct &s);
+void syncOut(vector<vector<Struct>>&);
+void asyncOut(int proc, vector<Struct>&);
 
 vector<vector<Struct>> ReadStuff(string file);
 vector<string> ReadLines(string file);
@@ -42,6 +48,19 @@ vector<string> ReadLines(string file);
 int main()
 {
 	auto input = ReadStuff("LapunasD.txt");
+	cout << "\nsinchroninis isvedimas\n\n";
+	syncOut(input);
+	cout << "\nasinchroninis isvedimas\n\n";
+	cout << setw(12) << "Procesas" << setw(3) << "Nr" << Titles() << "\n\n";
+	omp_set_num_threads(input.size());
+	int nr;
+	#pragma omp parallel private(nr)
+	{
+		nr = omp_get_thread_num();
+		asyncOut(nr, input[nr]);
+	}
+
+	system("pause");
 	return 0;
 }
 
@@ -76,4 +95,40 @@ vector<string> ReadLines(string file)
 		ret.push_back(line);
 	}
 	return ret;
+}
+
+string Titles()
+{
+	stringstream ss;
+	ss << setw(15) << "Pavadiniams" << setw(7) << "Kiekis" << setw(20) << "Kaina";
+	return ss.str();
+}
+
+void syncOut(vector<vector<Struct>> &data)
+{
+	cout << setw(3) << "Nr" << Titles() << endl << endl;
+	for(int i = 0; i < data.size(); i++)
+	{
+		auto vec = data[i];
+		cout << "Procesas_" << i << endl;
+		for(int j = 0; j < vec.size(); j++)
+		{
+			cout << Print(j, vec[j]) << endl;
+		}
+	}
+}
+
+void asyncOut(int proc, vector<Struct> &vec)
+{
+	for(int i = 0; i < vec.size(); i++)
+	{
+		cout << setw(11) << "Procesas_" << proc << setw(3) << i << vec[i].Print() << endl;
+	}
+}
+
+string Print(int nr, Struct &s)
+{
+	stringstream ss;
+	ss << setw(3) << nr << s.Print();
+	return ss.str();
 }
